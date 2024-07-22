@@ -23,9 +23,8 @@ public class PostController {
 
     }
 
-//    @GetMapping("/posts")
-//    public void getPosts(Pageable pageable, PagedResourcesAssembler assembler) {
-//        Page<Post> all = postRepository.findAll(pageable);
-//        return assembler.toResource(all);
-//    }
+    @GetMapping("/posts")
+    public Page<Post> getPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
 }
