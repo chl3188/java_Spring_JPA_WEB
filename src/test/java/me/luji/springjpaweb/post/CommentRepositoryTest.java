@@ -46,7 +46,7 @@ class CommentRepositoryTest {
 
         ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
                 .withIgnorePaths("up", "down");
- 
+
         Example<Comment> example = Example.of(prove, exampleMatcher);
 
         commentRepository.findAll(example);
