@@ -15,19 +15,24 @@ class CommentRepositoryTest {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @Test
     public void getComment() {
-//        Post post = new Post();
-//        post.setTitle("jpa");
-//
-//        Comment comment = new Comment();
-//        comment.setComment("comment");
-//        comment.setPost(post);
+        Post post = new Post();
+        post.setTitle("jpa");
+        Post savedPost = postRepository.save(post);
 
-        commentRepository.getById(1l);
+        Comment comment = new Comment();
+        comment.setComment("comment");
+        comment.setPost(savedPost);
+        comment.setUp(10);
+        comment.setDown(10);
+        commentRepository.save(comment);
 
-        System.out.println("============================");
-
-        commentRepository.findById(1l);
+        commentRepository.findByPost_Id(savedPost.getId(), CommentOnly.class).forEach(c-> {
+            System.out.println(c.getComment());
+        });
     }
 }
