@@ -5,6 +5,7 @@ import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.jpa.domain.JpaSort;
 
 import java.util.List;
 
@@ -56,7 +57,17 @@ public class PostRepositoryTest {
         post.setTitle("Spring");
         postRepository.save(post);              // PERSIST
 
-        List<Post> all = postRepository.findByTitle("Spring");
+        List<Post> all = postRepository.findByTitle("Spring", JpaSort.unsafe("LENGTH(title)"));
+        assertThat(all.size()).isEqualTo(1);
+    }
+
+    @Test
+    void findByTitleEndsWith() {
+        Post post = new Post();
+        post.setTitle("Spring");
+        postRepository.save(post);              // PERSIST
+
+        List<Post> all = postRepository.findByTitleStartingWith("Spring");
         assertThat(all.size()).isEqualTo(1);
     }
 }
