@@ -1,9 +1,16 @@
 package me.luji.springjpaweb.post;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-//@NamedEntityGraph(name = "Comment.post", attributeNodes = @NamedAttributeNode("post"))
+import java.util.Date;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Comment {
     @Id @GeneratedValue
     private long id;
@@ -18,6 +25,20 @@ public class Comment {
     private int down;
 
     private boolean best;
+
+    @CreatedDate
+    private Date created;
+
+    @CreatedBy
+    @ManyToOne
+    private Account createdBy;
+
+    @LastModifiedDate
+    private Date updated;
+
+    @LastModifiedBy
+    @ManyToOne
+    private Account updatedBy;
 
     public long getId() {
         return id;
@@ -65,5 +86,43 @@ public class Comment {
 
     public void setBest(boolean best) {
         this.best = best;
+    }
+
+    public Date getDate() {
+        return created;
+    }
+
+    public void setDate(Date date) {
+        this.created = date;
+    }
+
+    public Account getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Account createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
+    public Account getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Account updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        System.out.println("pre call");
+        this.created = new Date();
     }
 }
