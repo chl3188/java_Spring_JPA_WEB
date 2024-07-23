@@ -17,6 +17,9 @@ public class Comment {
 
     private String comment;
 
+    @Enumerated(value = EnumType.STRING)
+    private CommentStatus status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
