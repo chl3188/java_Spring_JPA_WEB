@@ -6,6 +6,7 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name = "Post.findByTitle", query = "SELECT p From Post p where p.title = ?1")
 public class Post extends AbstractAggregateRoot<Post> {
 
     @Id @GeneratedValue
